@@ -1,0 +1,18 @@
+[
+  {
+    "model": "products.productscategory",
+    "pk": 1,
+    "fields": {
+      "name": "Ботинки",
+      "description": "Кожаные ботинки"
+    }
+  },
+  {
+    "model": "products.productscategory",
+    "pk": 2,
+    "fields": {
+      "name": "Футболка",
+      "description": null
+    }
+  }
+]
