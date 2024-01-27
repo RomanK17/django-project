@@ -21,11 +21,13 @@ from django.conf import settings #только с таким импортом п
 
 
 from products.views import index, products
+from users.views import reg,log
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('products/', include('products.urls', namespace='products'))
+    path('products/', include('products.urls', namespace='products')),
+    path('users/', include('users.urls', namespace='users'))
 ]
 
 if settings.DEBUG:
