@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth
 from django.urls import reverse
 
-from users.form import UserLoginForm, UserRegistrationForm
+from users.form import UserLoginForm, UserRegistrationForm, UserProfileForm
 
 # Create your views here.
 
@@ -31,3 +31,14 @@ def reg(request):
         form = UserRegistrationForm()
     context = {'form': form}
     return render(request, 'users/register.html', context)
+
+def show_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = UserProfileForm(instance=request.user) # request.user - это пользователь, который отправляет post запрос
+    context = {'title': 'Профиль', 'form' : form}
+    return render(request, 'users/profile.html', context)
