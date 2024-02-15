@@ -43,3 +43,7 @@ def show_profile(request):
         form = UserProfileForm(instance=request.user) # request.user - это пользователь, который отправляет post запрос
     context = {'title': 'Профиль', 'form' : form}
     return render(request, 'users/profile.html', context)
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('index'))
