@@ -34,4 +34,4 @@ class Basket(models.Model):
     created_timestamp = models.DateTimeField(auto_now_add=True) # как это работает и для чего? auto_now_add=True - когда создаем новый объект в БД, то у него автоматически будет обновляться поле со временем создания
 
     def __str__(self):
-        return f'Корзина для пользователя {self.user.name} с добавленными товарами {self.product.name} '
+        return f'Корзина для пользователя {self.user.username} с добавленными товарами {self.product.name} '
