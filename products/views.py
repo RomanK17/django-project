@@ -1,7 +1,6 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
-
+from django.contrib.auth.decorators import login_required
 from products.models import Product, ProductsCategory, Basket
-from users.models import User
 
 
 def index(request):
@@ -20,6 +19,7 @@ def products(request):
     return render(request, 'products/products.html', context)
 
 
+@login_required()
 def add_basket(request, product_id):
     product = Product.objects.get(id=product_id)  # добавляем товар в корзирну
     basket = Basket.objects.filter(user=request.user, product=product)  # берем все корзины пользователя
@@ -33,7 +33,8 @@ def add_basket(request, product_id):
 
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # возвращает пользователя на обновленную страницу
 
+
 def remove_basket(request, basket_id):
-    basket= Basket.objects.get(id=basket_id)
+    basket = Basket.objects.get(id=basket_id)
     basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
