@@ -46,10 +46,7 @@ def show_profile(request):
     else:
         form = UserProfileForm(instance=request.user)  # request.user - это пользователь, который отправляет post запрос
     baskets = Basket.objects.filter(user=request.user)
-    total_sum = sum(basket.product.price * basket.quantity for basket in baskets)
-    total_quantity = sum(basket.quantity for basket in baskets)
-    context = {'title': 'Профиль', 'form': form, 'basket': baskets, 'total_sum'
-               :total_sum, 'total_quantity': total_quantity}
+    context = {'title': 'Профиль', 'form': form, 'basket': baskets}
     return render(request, 'users/profile.html', context)
 
 

@@ -26,6 +26,12 @@ class Product(models.Model):
     def __str__(self):
         return f'Товар:{self.name} из категории: {self.category.name}'
 
+class BasketQuerySet(models.QuerySet):
+    def total_sum(self):
+        return sum(basket.sum() for basket in self)
+
+    def total_quantity(self):
+        return sum(basket.quantity for basket in self)
 
 class Basket(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
@@ -33,6 +39,7 @@ class Basket(models.Model):
     quantity = models.PositiveSmallIntegerField(default=0)
     created_timestamp = models.DateTimeField(auto_now_add=True) # как это работает и для чего? auto_now_add=True - когда создаем новый объект в БД, то у него автоматически будет обновляться поле со временем создания
 
+    objects = BasketQuerySet.as_manager()
     def __str__(self):
         return f'Корзина для пользователя {self.user.username} с добавленными товарами {self.product.name} '
 
