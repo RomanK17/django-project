@@ -8,6 +8,7 @@ urlpatterns = [
     path('', products, name='index'), # что такое path? что значат эти аргументы? 1 - путь, куда будет переходить
     # пользователь(то есть просто продактс). 2- наше приложение. 3. - как у нас будет называться вьюха.
     path('category/<int:category_id>', products, name='category'),
+    path('page/<int:page_number>', products, name='paginator'),
     path('basket/add/<int:product_id>/', add_basket, name='add_basket' ), # <int:product_id>/ будет подставляться в product_id во вьюхе
     path('basket/remove/<int:basket_id>/', remove_basket, name='remove_basket' )
 ]

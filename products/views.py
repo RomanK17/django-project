@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 from products.models import Product, ProductsCategory, Basket
 
 
@@ -10,16 +12,13 @@ def index(request):
     return render(request, 'products/index.html', context)
 
 
-def products(request, category_id=None):
-    if category_id:
-        category = ProductsCategory.objects.get(id=category_id)
-        products = Product.objects.filter(category=category)
-    else:
-        products = Product.objects.all()
-
+def products(request, category_id=None,page_number=1):
+    products = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
+    paginator = Paginator(products, 1) # что передаем? первое - список объектов, у нас это queryset. Второе - сколько объектов оттображать на странице.
+    products_paginator = paginator.page(page_number) # на какой странице что отрисовываем.
     context = {
         'title': 'Catalog',
-        'products': products,
+        'products': products_paginator,
         'categories': ProductsCategory.objects.all()
     }
     return render(request, 'products/products.html', context)
